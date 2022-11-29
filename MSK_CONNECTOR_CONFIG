@@ -1,0 +1,17 @@
+connector.class=io.confluent.connect.s3.S3SinkConnector
+s3.region=us-west-2
+schema.compatibility=NONE
+flush.size=1000
+topics=workflow-log-event-test02
+tasks.max=2
+timezone=UTC
+format.class=io.confluent.connect.s3.format.bytearray.ByteArrayFormat
+partitioner.class=io.confluent.connect.storage.partitioner.DefaultPartitioner
+value.converter=org.apache.kafka.connect.converters.ByteArrayConverter
+storage.class=io.confluent.connect.s3.storage.S3Storage
+rotate.schedule.interval.ms=10000
+s3.bucket.name=duploservices-test02-workflow-log-sink-248202377929
+key.converter=org.apache.kafka.connect.converters.ByteArrayConverter
+
+
+msk-connector-test02
