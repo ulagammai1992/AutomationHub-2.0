@@ -1,0 +1,17 @@
+select date(convert_timezone( 'UTC', 'Asia/Kolkata',TO_TIMESTAMP(TRANSACTIONEND))),
+                        count(distinct TRANSACTION_ID ) from ELEMENT5_DB.AMEDISYS.TRANSACTIONS_FACT_DETAILS_ANALYTICAL
+where convert_timezone( 'UTC', 'Asia/Kolkata',TO_TIMESTAMP(TRANSACTIONEND)) between
+convert_timezone( 'UTC', 'Asia/Kolkata','2022-11-01 12:40:06.632 +0000')
+and convert_timezone( 'UTC', 'Asia/Kolkata','2022-11-08 12:43:48.711 +0000')
+and TRANSACTION_STATUS_ID= 'status_002' AND TRANS_LATEST_FLAG='Y'
+ GROUP BY date(convert_timezone( 'UTC', 'Asia/Kolkata',TO_TIMESTAMP(TRANSACTIONEND)));
+ 
+ 
+ 
+  select min(TRANSACTIONSTART) as TRANSACTION_START ,max(TRANSACTIONEND) as 
+     TRANSACTION_END ,
+    TRANSACTION_ID,TRANSACTIONEND, process_id ,
+    datediff(hour,TRANSACTION_START,TRANSACTION_END)/24  as ProcessingTime, 
+     TIMEDIFF(minutes,TRANSACTION_START,TRANSACTION_END)/60 as ProcessingTimeFormat  FROM QA_DB.AMEDISYS.TRANSACTIONS_FACT_DETAILS_ANALYTICAL
+    where  TRANSACTION_STATUS_ID= 'status_002' AND TRANS_LATEST_FLAG='Y' --and transaction_id ='255fe26b5bdc00da2d0c933973640748'
+    group by transaction_id ,TRANSACTIONEND,process_id
